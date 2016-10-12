@@ -4,23 +4,21 @@ namespace Tests\Analyze\Fixtures\Statement;
 
 class PropertyDefinitionDefaultValue
 {
-    public function testDeafultValue()
-    {
-        $a= null;
-    }
-
-    public function testNoDefaultValue()
-    {
-        $a;
-    }
+    public $a = null;
 }
+
+class PropetyDefinitionNoDefaultValue
+{
+    public $a;
+}
+
 ?>
 ----------------------------
 [
     {
-        "type": "prop_definition_default_value",
+        "type": "property_definition_default_value",
         "message": "null is default and is not needed.",
-        "file": "PropertyDefinitionDefalutValue.php",
-        "line": 9
+        "file": "PropertyDefinitionDefaultValue.php",
+        "line": 6
     }
 ]

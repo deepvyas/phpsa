@@ -131,7 +131,7 @@ Checks for use of PHP 4 constructors and discourages it.
 
 Checks if any optional parameters are before a required one. For example: `function ($a = 1, $b)`
 
-#### PropertyDefinitionDeafultValue
+#### PropertyDefinitionDefaultValue
 
 Checks if any Property Definition is done with a default null value(not needed). For example: `$a = null`
 

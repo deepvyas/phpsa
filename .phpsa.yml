@@ -169,7 +169,6 @@ phpsa:
             enabled:              true
         for_condition:
             enabled:              true
-
-        prop_definition_default_value:
+        property_definition_default_value:
             enabled:              true
 
