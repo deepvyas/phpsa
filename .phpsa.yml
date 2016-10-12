@@ -91,4 +91,6 @@ phpsa:
             enabled:              true
         yoda_condition:
             enabled:              true
+        for_loop_multiple:
+            enabled:              true
 

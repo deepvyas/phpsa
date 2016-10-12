@@ -70,6 +70,10 @@ Discourages the use of `exit()` and `die()`.
 
 Checks for use of static:: inside a final class.
 
+#### ForLoopMultiple
+
+Discourages usage of multiple conditions in for loop
+
 #### GlobalUsage
 
 Discourages the use of `global $var;`.
