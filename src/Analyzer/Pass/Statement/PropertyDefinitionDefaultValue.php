@@ -23,13 +23,13 @@ class PropertyDefinitionDefaultValue implements Pass\AnalyzerPassInterface
     {
         if ($stmt->default instanceof Node\Expr) {
             $compiled = $context->getExpressionCompiler()->compile($stmt->default);
-            if($compiled->getType()==CompiledExpression::NULL){
+            if ($compiled->getType()==CompiledExpression::NULL) {
                 $context->notice(
-                'prop_definition_default_value',
-                'null is default and is not needed.',
-                $stmt
+                    'prop_definition_default_value',
+                    'null is default and is not needed.',
+                    $stmt
                 );
-                return true;    
+                return true;
             }
         }
         return false;
