@@ -5,14 +5,12 @@ namespace Tests\Analyze\Fixtures\Statement;
 class PropertyDefinitionDefaultValue
 {
     public $a = null;
-}
-
-class PropetyDefinitionNoDefaultValue
-{
     public $a;
 }
 
 ?>
+----------------------------
+PHPSA\Analyzer\Pass\Statement\PropertyDefinitionDefaultValue
 ----------------------------
 [
     {
