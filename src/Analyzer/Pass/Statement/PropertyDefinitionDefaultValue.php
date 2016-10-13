@@ -9,6 +9,7 @@ use PhpParser\Node\Stmt\PropertyProperty;
 use PHPSA\Analyzer\Helper\DefaultMetadataPassTrait;
 use PHPSA\Analyzer\Pass;
 use PHPSA\Context;
+use PHPSA\CompiledExpression;
 
 class PropertyDefinitionDefaultValue implements Pass\AnalyzerPassInterface
 {

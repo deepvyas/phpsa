@@ -5,7 +5,7 @@ namespace Tests\Analyze\Fixtures\Statement;
 class PropertyDefinitionDefaultValue
 {
     public $a = null;
-    public $a;
+    public $b;
 }
 
 ?>
