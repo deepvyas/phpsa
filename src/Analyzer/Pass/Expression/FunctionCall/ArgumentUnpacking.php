@@ -9,6 +9,8 @@ use PHPSA\Definition\FunctionDefinition;
 
 class ArgumentUnpacking extends AbstractFunctionCallAnalyzer
 {
+    const DESCRIPTION = 'Checks for use of `func_get_args()` and suggests the use of argument unpacking. (... operator)';
+
     public function pass(FuncCall $funcCall, Context $context)
     {
         $functionName = $this->resolveFunctionName($funcCall, $context);
@@ -29,5 +31,16 @@ class ArgumentUnpacking extends AbstractFunctionCallAnalyzer
                 return;
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getMetadata()
+    {
+        $metaData = parent::getMetadata();
+        $metaData->setRequiredPhpVersion('5.6');
+
+        return $metaData;
     }
 }
