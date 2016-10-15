@@ -28,6 +28,10 @@ class Factory
             $configs[] = $passClass::getMetadata()->getConfiguration();
         }
 
+        foreach (self::getScalarPasses() as $passClass) {
+            $configs[] = $passClass::getMetadata()->getConfiguration();
+        }
+
         return $configs;
     }
 
@@ -72,6 +76,9 @@ class Factory
         $analyzer->registerStatementPasses(
             array_map($instanciate, array_filter(self::getStatementPasses(), $filterEnabled))
         );
+        $analyzer->registerScalarPasses(
+            array_map($instanciate, array_filter(self::getScalarPasses(), $filterEnabled))
+        );
         $analyzer->bind();
 
         return $analyzer;
@@ -102,6 +109,7 @@ class Factory
             AnalyzerPass\Statement\OptionalParamBeforeRequired::class,
             AnalyzerPass\Statement\YodaCondition::class,
             AnalyzerPass\Statement\ForCondition::class,
+            AnalyzerPass\Statement\PropertyDefinitionDefaultValue::class,
         ];
     }
 
@@ -120,6 +128,8 @@ class Factory
             AnalyzerPass\Expression\EvalUsage::class,
             AnalyzerPass\Expression\FinalStaticUsage::class,
             AnalyzerPass\Expression\CompareWithArray::class,
+            AnalyzerPass\Expression\DivisionFromZero::class,
+            AnalyzerPass\Expression\DivisionByOne::class,
             AnalyzerPass\Expression\BacktickUsage::class,
             AnalyzerPass\Expression\LogicInversion::class,
             AnalyzerPass\Expression\ExitUsage::class,
@@ -136,6 +146,16 @@ class Factory
             AnalyzerPass\Expression\FunctionCall\RegularExpressions::class,
             AnalyzerPass\Expression\FunctionCall\ArgumentUnpacking::class,
             AnalyzerPass\Expression\FunctionCall\DeprecatedFunctions::class,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private static function getScalarPasses()
+    {
+        return [
+            AnalyzerPass\Scalar\CheckLNumberKind::class,
         ];
     }
 }

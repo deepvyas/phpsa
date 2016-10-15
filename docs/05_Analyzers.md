@@ -35,6 +35,10 @@ Discourages the use of backtick operator for shell execution.
 
 Checks for casts that try to cast a type to itself.
 
+#### CheckLNumberKind
+
+Using octal, hexadecimal or binary integers is discouraged.
+
 #### CompareWithArray
 
 Checks for `{type array} > 1` and similar and suggests use of `count()`.
@@ -55,6 +59,14 @@ Checks for use of deprecated functions and gives alternatives if available.
 
 Checks for use of deprecated php.ini options and gives alternatives if available.
 
+#### DivisionByOne
+
+Checks for division by 1. For example: `$x/1`, `$x%true`
+
+#### DivisionFromZero
+
+Checks for division from 0. For example: `0/$x`, `false%$x`
+
 #### ErrorSuppression
 
 Discourages the use of the `@` operator to silence errors.
@@ -73,7 +85,7 @@ Checks for use of `static::` inside a final class.
 
 #### ForCondition
 
-Discourages the use of `for` with multiple conditions
+Discourages the use of `for` with multiple conditions.
 
 #### GlobalUsage
 
@@ -130,6 +142,10 @@ Checks for use of PHP 4 constructors and discourages it.
 #### OptionalParamBeforeRequired
 
 Checks if any optional parameters are before a required one. For example: `function ($a = 1, $b)`
+
+#### PropertyDefinitionDefaultValue
+
+Checks if any Property Definition is done with a default null value (not needed). For example: `$a = null`
 
 #### RandomApiMigration
 
