@@ -36,6 +36,28 @@ class Factory
     }
 
     /**
+     * @return \PHPSA\Analyzer\Pass\Metadata[]
+     */
+    public static function getPassesMetadata()
+    {
+        $meta = [];
+
+        foreach (self::getExpressionPasses() as $passClass) {
+            $meta[] = $passClass::getMetadata();
+        }
+
+        foreach (self::getStatementPasses() as $passClass) {
+            $meta[] = $passClass::getMetadata();
+        }
+
+        foreach (self::getScalarPasses() as $passClass) {
+            $meta[] = $passClass::getMetadata();
+        }
+
+        return $meta;
+    }
+
+    /**
      * @param EventManager $eventManager
      * @param Configuration $config
      * @return Analyzer
@@ -110,6 +132,7 @@ class Factory
             AnalyzerPass\Statement\YodaCondition::class,
             AnalyzerPass\Statement\ForCondition::class,
             AnalyzerPass\Statement\PropertyDefinitionDefaultValue::class,
+            AnalyzerPass\Statement\ReturnAndYieldInOneMethod::class,
         ];
     }
 
@@ -133,6 +156,7 @@ class Factory
             AnalyzerPass\Expression\BacktickUsage::class,
             AnalyzerPass\Expression\LogicInversion::class,
             AnalyzerPass\Expression\ExitUsage::class,
+            AnalyzerPass\Expression\NestedTernary::class,
             // Arrays
             AnalyzerPass\Expression\ArrayShortDefinition::class,
             AnalyzerPass\Expression\ArrayDuplicateKeys::class,
@@ -141,6 +165,7 @@ class Factory
             AnalyzerPass\Expression\FunctionCall\AliasCheck::class,
             AnalyzerPass\Expression\FunctionCall\DebugCode::class,
             AnalyzerPass\Expression\FunctionCall\RandomApiMigration::class,
+            AnalyzerPass\Expression\FunctionCall\SleepUsage::class,
             AnalyzerPass\Expression\FunctionCall\UseCast::class,
             AnalyzerPass\Expression\FunctionCall\DeprecatedIniOptions::class,
             AnalyzerPass\Expression\FunctionCall\RegularExpressions::class,

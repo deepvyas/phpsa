@@ -5,6 +5,9 @@
 
 namespace PHPSA;
 
+/**
+ * Manages use statements
+ */
 class AliasManager
 {
     /**
@@ -16,7 +19,7 @@ class AliasManager
     /**
      * @var string[] a list of imported namespaces
      */
-    protected $aliases = array();
+    protected $aliases = [];
 
     /**
      * @param string|null $namespace

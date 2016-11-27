@@ -2,6 +2,7 @@
 
 namespace PHPSA\Compiler\Statement;
 
+use PhpParser\Node\Scalar\LNumber;
 use PHPSA\CompiledExpression;
 use PHPSA\Context;
 
@@ -19,7 +20,15 @@ class ContinueSt extends AbstractCompiler
         $compiler = $context->getExpressionCompiler();
 
         if ($stmt->num !== null) {
-            $compiler->compile($stmt->num);
+            $compiled = $compiler->compile($stmt->num);
+
+            if (!($stmt->num instanceof LNumber) || $compiled->getValue() == 0) {
+                $context->notice(
+                    'language-error',
+                    'Continue only supports positive integers.',
+                    $stmt
+                );
+            }
         }
     }
 }

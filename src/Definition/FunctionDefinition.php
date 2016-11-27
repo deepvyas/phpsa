@@ -7,11 +7,14 @@ namespace PHPSA\Definition;
 
 use PHPSA\CompiledExpression;
 use PHPSA\Context;
+use PHPSA\Compiler\Parameter;
+use PHPSA\Compiler\Types;
 use PhpParser\Node;
 use PHPSA\Compiler\Event;
 
 /**
- * Class FunctionDefinition
+ * Function Definition
+ *
  * @package PHPSA\Definition
  */
 class FunctionDefinition extends ParentDefinition
@@ -36,7 +39,7 @@ class FunctionDefinition extends ParentDefinition
     /**
      * @var array
      */
-    protected $possibleReturnTypes = array();
+    protected $possibleReturnTypes = [];
 
     /**
      * @param string $name
@@ -60,6 +63,12 @@ class FunctionDefinition extends ParentDefinition
             return true;
         }
 
+        $context->setFilepath($this->filepath);
+        $this->compiled = true;
+
+        $context->scopePointer = $this->getPointer();
+        $context->setScope(null);
+
         $context->getEventManager()->fire(
             Event\StatementBeforeCompile::EVENT_NAME,
             new Event\StatementBeforeCompile(
@@ -68,16 +77,22 @@ class FunctionDefinition extends ParentDefinition
             )
         );
 
-        $context->setFilepath($this->filepath);
-        $this->compiled = true;
-
-        $context->scopePointer = $this->getPointer();
-        $context->setScope(null);
-
         if (count($this->statement->params) > 0) {
             /** @var  Node\Param $parameter */
             foreach ($this->statement->params as $parameter) {
-                $context->addSymbol($parameter->name);
+                $type = CompiledExpression::UNKNOWN;
+
+                if ($parameter->type) {
+                    if (is_string($parameter->type)) {
+                        $type = Types::getType($parameter->type);
+                    } elseif ($parameter->type instanceof Node\Name) {
+                        $type = CompiledExpression::OBJECT;
+                    }
+                }
+
+                $context->addVariable(
+                    new Parameter($parameter->name, null, $type, $parameter->byRef)
+                );
             }
         }
 

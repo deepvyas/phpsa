@@ -1,10 +1,10 @@
 # How to write your own Analyzer
 
-This gives an overview about what is needed to do, to create your own analyzer. It mainly consists of 3 steps.
+This gives an overview of what needs to be done to create your own analyzer. It mainly consists of 4 steps:
 
 ### 1. Create Analyzer
 
-First you need to find out what you want to do. There are Expressions and Statements. 
+First, you need to find out what you want to do. There are Expressions, Statements and Scalars. 
 
 A rule of thumb is: if what you want to check for has blocks (for example if, while, try catch) it is a statement, else it's an expression. But there are exceptions to this so just check nikic's PhpParser project to find out what you need:
 
@@ -16,21 +16,17 @@ If you found what you need you can create your analyzer in the appropriate direc
 
 You will have to change the getRegister() method. Add here all the Nodes you want your analyzer to check. (can be multiple!) In the pass() method you write the code your analyzer should execute. The metadata are some configuration settings. For example you can set a minimum php version level. If the checked code is below that version level your analyzer won't be executed.
 
-A tip for writing your analyzer: Check out the `$context` variable that gets passed in. It contains a lot of useful things. For example you can get an Expression Compiler like this:
+A tip for writing your analyzer: Check out the `$context` variable that gets passed in. It contains a lot of useful things. For example, you can get an Expression Compiler like this:
 
 `$context->getExpressionCompiler()->compile($something);`
 
-You can then use that CompiledExpression. This can for example compile variables down to it's value or check data types.
+You can then use that CompiledExpression. This can, for example, compile variables down to its value or check data types.
 
 ### 2. Add it to the Factory
 
-You need to add it to \PHPSA\Analyzer\Factory. If you have created an Expression Analyzer add it to the top list. If you have created a Statement Analyzer add it to the bottom one.
+You need to add it to \PHPSA\Analyzer\Factory. Check that you used the correct list.
 
-### 3. Add Config setting
-
-In the project root directory is a config file called `.phpsa.yml` here you can add your analyzer and give it a default setting of true/false for enabled.
-
-### 4. Write Tests
+### 3. Write Tests
 
 If you want to create a Pull Request and want to share your new analyzer with the rest of us, we require that you write some tests for it.
 
@@ -40,6 +36,10 @@ At the top of your test you write a class/function/trait/interface with an examp
 
 Now you split that file by: `----------------------------` (it has to be exactly this long) and below it add a JSON with all the notices of one type (the one of your analyzer) that should occur when checking the file at the top. (Look at existing ones)
 
-### 5. Add it to Documentation
+You can run the tests by typing `make ci` in the project root directory. This will automatically run all tests Travis runs.
 
-Add your analyzer to `docs/05_Analyzers.md` with a short description of what your analyzer does.
+### 4. Make resources
+
+Execute `make analyzers` in the project root directory to update the configuration and documentation file. If all tests pass you can now create your pull request.
+
+Next: [Plugins](./07_Plugins.md)

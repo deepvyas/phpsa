@@ -37,13 +37,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $actual
+     * @param CompiledExpression|null $actual
      * @param string $message
      */
     protected function assertInstanceOfCompiledExpression($actual, $message = '')
     {
         parent::assertInstanceOf(
-            \PHPSA\CompiledExpression::class,
+            CompiledExpression::class,
             $actual,
             $message
         );
@@ -77,7 +77,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      * @param $value
      * @throws RuntimeException when non empty array is passed
      * @throws RuntimeException when type of param is not supported
-     * @return Node\Scalar\DNumber|Node\Scalar\LNumber
+     * @return Node\Scalar|Node\Expr\Array_
      */
     public function newScalarExpr($value)
     {

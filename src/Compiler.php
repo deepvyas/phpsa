@@ -11,22 +11,25 @@ use PHPSA\Definition\RuntimeClassDefinition;
 use PHPSA\Definition\TraitDefinition;
 use ReflectionClass;
 
+/**
+ * Compiler component
+ */
 class Compiler
 {
     /**
      * @var ClassDefinition[]
      */
-    protected $classes = array();
+    protected $classes = [];
 
     /**
      * @var TraitDefinition[]
      */
-    protected $traits = array();
+    protected $traits = [];
 
     /**
      * @var FunctionDefinition[]
      */
-    protected $functions = array();
+    protected $functions = [];
 
     /**
      * @param ClassDefinition $class

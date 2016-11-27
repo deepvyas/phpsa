@@ -12,7 +12,8 @@ use PHPSA\Variable;
 use PHPSA\Compiler\Event;
 
 /**
- * Class ClassDefinition
+ * Class Definition
+ *
  * @package PHPSA\Definition
  */
 class ClassDefinition extends ParentDefinition
@@ -27,28 +28,28 @@ class ClassDefinition extends ParentDefinition
      *
      * @var ClassMethod[]
      */
-    protected $methods = array();
+    protected $methods = [];
 
     /**
      * Class properties
      *
      * @var Node\Stmt\PropertyProperty[]
      */
-    protected $properties = array();
+    protected $properties = [];
 
     /**
      * Property Statements
      *
      * @var Node\Stmt\Property[]
      */
-    protected $propertyStatements = array();
+    protected $propertyStatements = [];
 
     /**
      * Class constants
      *
      * @var Node\Stmt\Const_[]
      */
-    protected $constants = array();
+    protected $constants = [];
 
     /**
      * @todo Use Finder
@@ -75,7 +76,7 @@ class ClassDefinition extends ParentDefinition
     /**
      * @var array
      */
-    protected $interfaces = array();
+    protected $interfaces = [];
 
     /**
      * @param string $name
@@ -140,6 +141,10 @@ class ClassDefinition extends ParentDefinition
             return true;
         }
 
+        $this->compiled = true;
+        $context->setFilepath($this->filepath);
+        $context->setScope($this);
+
         $context->getEventManager()->fire(
             Event\StatementBeforeCompile::EVENT_NAME,
             new Event\StatementBeforeCompile(
@@ -147,10 +152,6 @@ class ClassDefinition extends ParentDefinition
                 $context
             )
         );
-
-        $this->compiled = true;
-        $context->setFilepath($this->filepath);
-        $context->setScope($this);
 
         // Compile event for properties
         foreach ($this->properties as $property) {
